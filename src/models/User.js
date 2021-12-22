@@ -3,8 +3,9 @@ const mongoose = require('mongoose');
 const userSchema = new mongoose.Schema({
     name: {
         type: 'string',
-        required: true,
+        required: [true, 'Already exist user with this name.'],
         minLength: [3, 'Name must be at least 3 characters.'],
+        unique: true
     },
     password: {
         type: 'string',
@@ -14,9 +15,10 @@ const userSchema = new mongoose.Schema({
     email: {
         type: 'string',
         required: true,
+        unique: true,
     }
 })
 
-const User = mongoose.model('User',userSchema);
+const User = mongoose.model('User', userSchema);
 
 module.exports = User;
