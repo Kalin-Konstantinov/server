@@ -1,5 +1,8 @@
 const mongoose = require('mongoose');
 
+const bcrypt = require('bcrypt');
+const { ROUNDS_HASH_PASSOWRD } = require('../constants')
+
 const userSchema = new mongoose.Schema({
     name: {
         type: 'string',
@@ -17,6 +20,11 @@ const userSchema = new mongoose.Schema({
         required: true,
         unique: true,
     }
+})
+
+userSchema.pre('save', async function () {
+    let res = await bcrypt.hash(this.password, ROUNDS_HASH_PASSOWRD);
+    this.password = res;
 })
 
 const User = mongoose.model('User', userSchema);
