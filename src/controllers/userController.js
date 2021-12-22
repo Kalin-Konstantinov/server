@@ -1,7 +1,7 @@
 const router = require('express').Router();
 
 const login = (req, res) => {
-    res.json({msg: 'logged'});
+    res.json(req.headers);
 }
 
 const register = (req, res) => {
