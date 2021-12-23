@@ -48,13 +48,11 @@ const registerUser = (req, res) => {
 
 const logout = (req, res) => {
     const userToken = req.headers['x-authorization'];
-    console.log(userToken);
     jwt.verify(userToken, JWT_SECRET)
         .then(response => {
-            //to do remove accessToken
-            console.log(response);
+            res.json({ status: 200, ok: true });
         })
-        .catch(err => res.json({ err}))
+        .catch(err => res.json({ err }))
 }
 
 router.post('/login', loginUser);
