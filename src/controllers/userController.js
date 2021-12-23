@@ -1,6 +1,9 @@
 const router = require('express').Router();
-const { register, findUserByEmail } = require('../services/userService');
 const bcrypt = require('bcrypt');
+
+const { register, findUserByEmail } = require('../services/userService');
+const { JWT_SECRET } = require('../constants');
+const jwt = require('../helpers/jwt');
 
 const errorMessage = { message: `Invalid password or username.` }
 
@@ -18,7 +21,17 @@ const loginUser = (req, res) => {
             if (!passwordValidation) {
                 throw errorMessage;
             }
-            res.json(user)
+            const { _id, name, email } = user;
+            const payload = {
+                _id,
+                name,
+                email
+            }
+            return Promise.all([jwt.sing(payload, JWT_SECRET), payload])
+        })
+        .then(responese => {
+            const [accessToken, payload] = responese;
+            res.json({ ...payload, accessToken })
         })
         .catch(err => res.json({ err }))
 }
@@ -26,13 +39,10 @@ const loginUser = (req, res) => {
 const registerUser = (req, res) => {
     const { name, email, password } = req.body;
     register({ name, email, password })
-        .then(dbRes => {
-            const _id = dbRes._id;
-            const name = dbRes.name;
-            const email = dbRes.email;
-            res.json({ _id, name, email });
+        .then(() => {
+            loginUser(req, res);
         })
-        .catch(err => res.json({ message: err.message }))
+        .catch(err => res.json({ err }))
 
 }
 
