@@ -2,23 +2,25 @@ const router = require('express').Router();
 const { register, findUserByEmail } = require('../services/userService');
 const bcrypt = require('bcrypt');
 
+const errorMessage = { message: `Invalid password or username.` }
+
 const loginUser = (req, res) => {
     const { email, password } = req.body;
     findUserByEmail({ email })
         .then(user => {
-            return Promise.all([bcrypt.compare(password, user?.password), user])
+            if (user == null) {
+                throw errorMessage;
+            }
+            return Promise.all([bcrypt.compare(password, user.password), user])
         })
         .then(response => {
             const [passwordValidation, user] = response;
-            if (user == null || !passwordValidation) {
-                throw new Error(`Invalid password or username.`)
+            if (!passwordValidation) {
+                throw errorMessage;
             }
             res.json(user)
         })
-        .catch(err => res.json({
-            error: 403,
-            message: err.message,
-        }))
+        .catch(err => res.json({ err }))
 }
 
 const registerUser = (req, res) => {
