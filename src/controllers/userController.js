@@ -27,7 +27,7 @@ const loginUser = (req, res) => {
                 name,
                 email
             }
-            return Promise.all([jwt.sing(payload, JWT_SECRET), payload])
+            return Promise.all([jwt.sing(payload, JWT_SECRET, { expiresIn: '1h' }), payload])
         })
         .then(responese => {
             const [accessToken, payload] = responese;
@@ -47,8 +47,14 @@ const registerUser = (req, res) => {
 }
 
 const logout = (req, res) => {
-    res.json({ msg: 'loggedout' });
-
+    const userToken = req.headers['x-authorization'];
+    console.log(userToken);
+    jwt.verify(userToken, JWT_SECRET)
+        .then(response => {
+            //to do remove accessToken
+            console.log(response);
+        })
+        .catch(err => res.json({ err}))
 }
 
 router.post('/login', loginUser);

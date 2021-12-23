@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const bcrypt = require('bcrypt');
-const { ROUNDS_HASH_PASSOWRD } = require('../constants')
+const { ROUNDS_HASH_PASSWORD } = require('../constants')
 
 const userSchema = new mongoose.Schema({
     name: {
@@ -23,7 +23,7 @@ const userSchema = new mongoose.Schema({
 })
 
 userSchema.pre('save', async function () {
-    let res = await bcrypt.hash(this.password, ROUNDS_HASH_PASSOWRD);
+    let res = await bcrypt.hash(this.password, ROUNDS_HASH_PASSWORD);
     this.password = res;
 })
 
