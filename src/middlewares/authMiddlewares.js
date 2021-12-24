@@ -10,8 +10,8 @@ exports.isAuth = (req, res, next) => {
                 req.user = user;
                 next();
             })
-            .catch(err => {
-                res.json({ err: "invalid token"})
+            .catch(() => {
+                res.json({ err: { message: "invalid token" } })
             })
     } else {
         req.user = undefined;
