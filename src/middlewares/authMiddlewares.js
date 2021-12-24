@@ -2,7 +2,7 @@
 const { JWT_SECRET } = require('../constants');
 const jwt = require('../helpers/jwt');
 
-exports.isAuth = (req, res, next) => {
+exports.checkAndSetUser = (req, res, next) => {
     let token = req.headers['x-authorization'];
     if (token) {
         jwt.verify(token, JWT_SECRET)
@@ -11,10 +11,18 @@ exports.isAuth = (req, res, next) => {
                 next();
             })
             .catch(() => {
-                res.json({ err: { message: "invalid token" } })
+                res.json({ err: { message: "invalid token" } });
             })
     } else {
         req.user = undefined;
         next();
+    }
+}
+
+exports.isAuthenticated = (req, res, next) => {
+    if (req.user) {
+        next();
+    } else {
+        res.json({ err: { status: 401, message: "You must be logged in for this feature!", ok: false } })
     }
 }
