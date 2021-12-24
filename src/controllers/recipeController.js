@@ -1,5 +1,5 @@
 const { isAuthenticated } = require('../middlewares/authMiddlewares');
-const { createRecipe } = require('../services/recipeService');
+const { createRecipe, getAll } = require('../services/recipeService');
 
 const router = require('express').Router();
 
@@ -14,8 +14,16 @@ const postRecipe = (req, res) => {
         .catch(err => res.json(err))
 }
 
+const getAllRcipes = (req, res) => {
+    getAll()
+        .then(recipes => {
+            res.json({ recipes });
+        })
+}
+
 
 router.post('/', isAuthenticated, postRecipe);
+router.get('/', getAllRcipes);
 
 module.exports = router;
 
