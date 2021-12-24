@@ -5,18 +5,18 @@ const { ROUNDS_HASH_PASSWORD } = require('../constants')
 
 const userSchema = new mongoose.Schema({
     name: {
-        type: 'string',
+        type: String,
         required: [true, 'Already exist user with this name.'],
         minLength: [3, 'Name must be at least 3 characters.'],
         unique: true
     },
     password: {
-        type: 'string',
+        type: String,
         required: true,
         minLength: [5, 'Password must be at leasr 5 characters.']
     },
     email: {
-        type: 'string',
+        type: String,
         required: true,
         unique: true,
     }
