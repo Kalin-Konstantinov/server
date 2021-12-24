@@ -1,13 +1,17 @@
 const express = require('express');
-const app = express();
-const cors = require('cors');
-const routes = require('./routes');
 const mongoose = require('mongoose');
+const cors = require('cors');
+
+const routes = require('./routes');
+const { isAuth } = require('./middlewares/authMiddlewares');
+
+const app = express();
 
 
 const port = 5000;
 
 app.use(express.json());
+app.use(isAuth)
 app.use(cors());
 app.use(routes);
 
