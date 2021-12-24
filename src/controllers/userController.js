@@ -46,17 +46,17 @@ const registerUser = (req, res) => {
 
 }
 
-const logout = (req, res) => {
+const logoutUser = (req, res) => {
     const userToken = req.headers['x-authorization'];
     jwt.verify(userToken, JWT_SECRET)
-        .then(response => {
+        .then(() => {
             res.json({ status: 200, ok: true });
         })
-        .catch(err => res.json({ err }))
+        .catch(() => res.json({ status: 401, ok: false }));
 }
 
 router.post('/login', loginUser);
 router.post('/register', registerUser);
-router.post('/logout', logout);
+router.post('/logout', logoutUser);
 
 module.exports = router;
