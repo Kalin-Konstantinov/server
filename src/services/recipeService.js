@@ -2,4 +2,4 @@ const Recipe = require('../models/Recipes');
 
 exports.createRecipe = (data) => Recipe.create(data);
 
-exports.getAll = () => Recipe.find({}).populate('ownerId', 'name');
+exports.findAllRecipes = () => Recipe.find({}).populate('ownerId', 'name');

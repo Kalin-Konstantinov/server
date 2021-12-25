@@ -15,7 +15,7 @@ const postRecipe = (req, res) => {
 }
 
 const getAllRcipes = (req, res) => {
-    getAll()
+    findAllRecipes()
         .then(recipes => {
             res.json({ recipes });
         })
