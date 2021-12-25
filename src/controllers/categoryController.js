@@ -1,11 +1,13 @@
-const { createCategory } = require('../services/categoryService');
+const { createCategory, findAllCaetgorys } = require('../services/categoryService');
 
 const router = require('express').Router();
 
 
 const postCategory = (req, res) => {
-    const { name, imageUrl} = req.body;
+    let { name, imageUrl} = req.body;
+    name = name.toLowerCase();
     const data = {name, imageUrl};
+
     createCategory(data)
         .then(response => {
             res.json(response);
@@ -14,7 +16,10 @@ const postCategory = (req, res) => {
 }
 
 const getAllCategorys = (req, res) => {
-
+    findAllCaetgorys()
+    .then(response => {
+        res.json(response);
+    })
 }
 
 
