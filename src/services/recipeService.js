@@ -9,3 +9,5 @@ exports.findRecipesByCategory = (categoryName) => Recipe.find({ category: catego
 exports.findOneRecipeById = (recipeId) => Recipe.findOne({ _id: recipeId }).populate('ownerId', 'name');
 
 exports.findRecipeAndUpdate =(recipeId, recipeData) => Recipe.findByIdAndUpdate(recipeId, recipeData);
+
+exports.findRecipeAndDeleteIt = (recipeId) => Recipe.findByIdAndDelete(recipeId);

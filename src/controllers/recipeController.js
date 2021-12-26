@@ -1,5 +1,5 @@
 const { isAuthenticated } = require('../middlewares/authMiddlewares');
-const { createRecipe, findRecipesByCategory, findOneRecipeById, findRecipeAndUpdate } = require('../services/recipeService');
+const { createRecipe, findRecipesByCategory, findOneRecipeById, findRecipeAndUpdate, findRecipeAndDeleteIt } = require('../services/recipeService');
 
 const router = require('express').Router();
 
@@ -45,10 +45,17 @@ const updateOneRecipe = (req, res) => {
         .catch(err => res.json(err))
 }
 
+const deleteRecipe = (req, res) => {
+    const recipeId = req.params.recipeId;
+    findRecipeAndDeleteIt(recipeId)
+        .then(() => res.json({ ok: true }))
+}
+
 
 router.post('/', isAuthenticated, postRecipe);
 router.get('/', getAllRcipes);
 router.get('/one/:recipeId', getOneRecipeById);
+router.delete('/one/:recipeId', deleteRecipe);
 router.put('/one/:recipeId', updateOneRecipe);
 router.get('/:categoryName', getRecipesByCategory);
 
