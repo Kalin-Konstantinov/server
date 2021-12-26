@@ -52,8 +52,8 @@ const deleteRecipe = (req, res) => {
 }
 
 const getRecipesOfUser = (req, res) => {
-    const userId = req.params.userId;
 
+    userId = req.user._id;
     findAllRecipesOfUser(userId)
         .then(recipes => {
             res.json(recipes);
