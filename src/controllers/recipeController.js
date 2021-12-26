@@ -53,6 +53,10 @@ const deleteRecipe = (req, res) => {
 
 const getRecipesOfUser = (req, res) => {
     const userId = req.params.userId;
+    if (!userId) {
+        res.json({ ok: false, message: 'Id cant be Undefined' });
+        return;
+    }
     findAllRecipesOfUser(userId)
         .then(recipes => {
             res.json(recipes);
