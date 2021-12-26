@@ -30,9 +30,7 @@ const getRecipesByCategory = (req, res) => {
 }
 
 const getOneRecipeById = (req, res) => {
-    console.log('here');
     const recipeId = req.params.recipeId;
-    console.log(recipeId);
     findOneRecipeById(recipeId)
         .then(recipe => res.json(recipe))
 }
