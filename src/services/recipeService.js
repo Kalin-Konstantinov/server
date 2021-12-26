@@ -11,3 +11,5 @@ exports.findOneRecipeById = (recipeId) => Recipe.findOne({ _id: recipeId }).popu
 exports.findRecipeAndUpdate =(recipeId, recipeData) => Recipe.findByIdAndUpdate(recipeId, recipeData);
 
 exports.findRecipeAndDeleteIt = (recipeId) => Recipe.findByIdAndDelete(recipeId);
+
+exports.findAllRecipesOfUser = (userId) => Recipe.find({ownerId: userId}).populate('ownerId', 'name');

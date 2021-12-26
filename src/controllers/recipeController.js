@@ -1,5 +1,5 @@
 const { isAuthenticated } = require('../middlewares/authMiddlewares');
-const { createRecipe, findRecipesByCategory, findOneRecipeById, findRecipeAndUpdate, findRecipeAndDeleteIt } = require('../services/recipeService');
+const { createRecipe, findRecipesByCategory, findOneRecipeById, findRecipeAndUpdate, findRecipeAndDeleteIt, findAllRecipesOfUser } = require('../services/recipeService');
 
 const router = require('express').Router();
 
@@ -51,6 +51,13 @@ const deleteRecipe = (req, res) => {
         .then(() => res.json({ ok: true }))
 }
 
+const getRecipesOfUser = (req, res) => {
+    const userId = req.params.userId;
+    findAllRecipesOfUser(userId)
+        .then(recipes => {
+            res.json(recipes);
+        })
+}
 
 router.post('/', isAuthenticated, postRecipe);
 router.get('/', getAllRcipes);
@@ -58,6 +65,7 @@ router.get('/one/:recipeId', getOneRecipeById);
 router.delete('/one/:recipeId', deleteRecipe);
 router.put('/one/:recipeId', updateOneRecipe);
 router.get('/:categoryName', getRecipesByCategory);
+router.get('/user/:userId', getRecipesOfUser);
 
 module.exports = router;
 
