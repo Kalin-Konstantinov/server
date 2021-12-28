@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const bcrypt = require('bcrypt');
 
-const { register, findUserByEmail } = require('../services/userService');
+const { register, findUserByEmail, findUserByName } = require('../services/userService');
 const { JWT_SECRET } = require('../constants');
 const jwt = require('../helpers/jwt');
 
@@ -27,22 +27,43 @@ const loginUser = (req, res) => {
                 name,
                 email
             }
-            return Promise.all([jwt.sing(payload, JWT_SECRET, { expiresIn: '1h' }), payload])
+            return Promise.all([jwt.sing(payload, JWT_SECRET), payload])
         })
         .then(responese => {
             const [accessToken, payload] = responese;
             res.json({ ...payload, accessToken })
         })
-        .catch(err => res.json({ err }))
+        .catch(err => {
+            console.log(err);
+            res.json({ err })
+        })
 }
 
 const registerUser = (req, res) => {
     const { name, email, password } = req.body;
+
+    // findUserByEmail(email)
+    //     .then(user => {
+    //         if (user) {
+    //              res.json({ message: 'User with this name already exists', err: 401 });
+    //         }
+    //     })
+    // findUserByName(name)
+    //     .then(user => {
+    //         if (user) {
+    //              res.json({ message: 'User with this email already exists', err: 401 });
+    //         }
+    //     })
     register({ name, email, password })
         .then(() => {
             loginUser(req, res);
         })
-        .catch(err => res.json({ err }))
+        .catch(err => {
+            const errProperty = Object.keys(err.keyValue)[0]
+            const errName = err.keyValue[errProperty];
+            res.json({ err: 401, message: `User with this ${errProperty}: ${errName} already exist`});
+            console.log(err);
+        })
 
 }
 

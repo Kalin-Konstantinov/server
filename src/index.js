@@ -18,6 +18,6 @@ app.use(routes);
 mongoose.connect(`mongodb+srv://${user.username}:${user.password}@cluster0.fmnru.mongodb.net/react-application?retryWrites=true&w=majority`)
     .then(() => {
         console.log('DB is connected!');
-        app.listen(port, () => console.log(`Server is running on port 5000`));
+        app.listen(port, () => console.log(`Server is running on post ${port}`));
     })
     .catch(err => console.error('Filed to connect DB', err));

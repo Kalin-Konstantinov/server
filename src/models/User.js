@@ -6,9 +6,9 @@ const { ROUNDS_HASH_PASSWORD } = require('../constants')
 const userSchema = new mongoose.Schema({
     name: {
         type: String,
-        required: [true, 'Already exist user with this name.'],
+        required: true,
         minLength: [3, 'Name must be at least 3 characters.'],
-        unique: true
+        unique: true,
     },
     password: {
         type: String,
@@ -18,7 +18,7 @@ const userSchema = new mongoose.Schema({
     email: {
         type: String,
         required: true,
-        unique: true,
+        unique: [true, 'Already have user with this email.'],
     }
 })
 
