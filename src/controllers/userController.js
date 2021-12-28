@@ -5,7 +5,7 @@ const { register, findUserByEmail, findUserByName } = require('../services/userS
 const { JWT_SECRET } = require('../constants');
 const jwt = require('../helpers/jwt');
 
-const errorMessage = { message: `Invalid password or username.` }
+const errorMessage = { message: `Invalid password or username.`, err: 401 }
 
 const loginUser = (req, res) => {
     const { email, password } = req.body;
@@ -35,25 +35,13 @@ const loginUser = (req, res) => {
         })
         .catch(err => {
             console.log(err);
-            res.json({ err })
+            res.json(err)
         })
 }
 
 const registerUser = (req, res) => {
     const { name, email, password } = req.body;
 
-    // findUserByEmail(email)
-    //     .then(user => {
-    //         if (user) {
-    //              res.json({ message: 'User with this name already exists', err: 401 });
-    //         }
-    //     })
-    // findUserByName(name)
-    //     .then(user => {
-    //         if (user) {
-    //              res.json({ message: 'User with this email already exists', err: 401 });
-    //         }
-    //     })
     register({ name, email, password })
         .then(() => {
             loginUser(req, res);
@@ -61,7 +49,7 @@ const registerUser = (req, res) => {
         .catch(err => {
             const errProperty = Object.keys(err.keyValue)[0]
             const errName = err.keyValue[errProperty];
-            res.json({ err: 401, message: `User with this ${errProperty}: ${errName} already exist`});
+            res.json({ err: 401, message: `User with this ${errProperty}: ${errName} already exist` });
             console.log(err);
         })
 
@@ -78,6 +66,6 @@ const logoutUser = (req, res) => {
 
 router.post('/login', loginUser);
 router.post('/register', registerUser);
-router.post('/logout', logoutUser);
+router.post('/logout', isAuthenticated, logoutUser);
 
 module.exports = router;
