@@ -4,6 +4,7 @@ const bcrypt = require('bcrypt');
 const { register, findUserByEmail, findUserByName } = require('../services/userService');
 const { JWT_SECRET } = require('../constants');
 const jwt = require('../helpers/jwt');
+const { isAuthenticated } = require('../middlewares/authMiddlewares');
 
 const errorMessage = { message: `Invalid password or username.`, err: 401 }
 
@@ -66,6 +67,6 @@ const logoutUser = (req, res) => {
 
 router.post('/login', loginUser);
 router.post('/register', registerUser);
-router.post('/logout', isAuthenticated, logoutUser);
+router.post('/logout', logoutUser);
 
 module.exports = router;

@@ -33,8 +33,8 @@ exports.isAuthor = (req, res, next) => {
     const email = req.user.email;
     const recipeId = req.params.recipeId;
     findOneRecipeById(recipeId)
-        .then(currRecipe => {
-            if (userId != undefined && (currRecipe.ownerId._id === userId || email === 'admin@admin')) {
+    .then(currRecipe => {
+            if (userId != undefined && (currRecipe.ownerId._id == userId || email === 'admin@admin')) {
                 return next();
             } else {
                 res.json({err: 403, message: 'Access to the requested resource is forbidden!'})
