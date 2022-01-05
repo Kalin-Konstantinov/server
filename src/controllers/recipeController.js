@@ -62,9 +62,9 @@ const getRecipesOfUser = (req, res) => {
 
 router.post('/', isAuthenticated, postRecipe);
 router.get('/', getAllRcipes);
-router.get('/one/:recipeId', getOneRecipeById);
-router.delete('/one/:recipeId',isAuthenticated, isAuthor,  deleteRecipe);
-router.put('/one/:recipeId', isAuthenticated, isAuthor, updateOneRecipe);
+router.get('/:recipeId', getOneRecipeById);
+router.delete('/:recipeId',isAuthenticated, isAuthor,  deleteRecipe);
+router.put('/:recipeId', isAuthenticated, isAuthor, updateOneRecipe);
 // router.get('/:categoryName', getRecipesByCategory);
 router.get('/user/:userId', isAuthenticated, getRecipesOfUser);
 
