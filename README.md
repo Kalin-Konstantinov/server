@@ -3,7 +3,7 @@
 
 | Contents
 |---
-| [Usage and Purpose](#usage)
+| [Usage and Purpose](#usage and purpose)
 | [Services](#services)
 | - [Authentication](#authentication)
 | - [Recipes](#recipes)
