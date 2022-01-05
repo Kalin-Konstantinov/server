@@ -12,7 +12,7 @@ exports.checkAndSetUser = (req, res, next) => {
                 next();
             })
             .catch(() => {
-                res.json({ err: { message: "invalid token" } });
+                res.json({ status: 401, err: { message: "invalid token" }, ok: false });
             })
     } else {
         req.user = undefined;
@@ -33,11 +33,11 @@ exports.isAuthor = (req, res, next) => {
     const email = req.user.email;
     const recipeId = req.params.recipeId;
     findOneRecipeById(recipeId)
-    .then(currRecipe => {
+        .then(currRecipe => {
             if (userId != undefined && (currRecipe?.ownerId._id == userId || email === 'admin@admin')) {
                 return next();
             } else {
-                res.json({err: 403, message: 'Access to the requested resource is forbidden!'})
+                res.json({ err: 403, message: 'Access to the requested resource is forbidden!', ok: false });
             }
 
         })
