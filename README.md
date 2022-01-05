@@ -3,14 +3,14 @@
 
 | Contents
 |---
-| [Usage and Purpose](#usage and purpose)
+| [Usage](#usage)
 | [Services](#services)
 | - [Authentication](#authentication)
 | - [Recipes](#recipes)
 | - [Category](#category)
 
 
-## Usage and Purpose
+## Usage
 
 This is an exercise to build a REST API. To start the server, you can use `npm start` on application terminal. 
 
