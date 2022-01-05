@@ -27,16 +27,10 @@ const getAllCategorys = (req, res) => {
         })
 }
 
-const getOneCategory = (req, res) => {
-    const name = req.params.categoryName;
 
-    findOneCaetgory(name)
-        .then(category => res.json(category))
-}
 
 
 router.post('/', postCategory);
 router.get('/', getAllCategorys);
-router.get('/:categoryName', getOneCategory);
 
 module.exports = router;
