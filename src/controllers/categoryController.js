@@ -1,4 +1,5 @@
 const { createCategory, findAllCaetgorys, findOneCaetgory } = require('../services/categoryService');
+const { findRecipesByCategory } = require('../services/recipeService');
 
 const router = require('express').Router();
 
@@ -27,10 +28,16 @@ const getAllCategorys = (req, res) => {
         })
 }
 
+const getRecipesByCategory = (req, res) => {
+    const categoryName = req.params.categoryName;
 
+    findRecipesByCategory(categoryName)
+        .then(recipes => res.json(recipes))
+}
 
 
 router.post('/', postCategory);
 router.get('/', getAllCategorys);
+router.get('/:categoryName', getRecipesByCategory);
 
 module.exports = router;

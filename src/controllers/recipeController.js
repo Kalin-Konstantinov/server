@@ -22,12 +22,12 @@ const getAllRcipes = (req, res) => {
         })
 }
 
-const getRecipesByCategory = (req, res) => {
-    const categoryName = req.params.categoryName;
+// const getRecipesByCategory = (req, res) => {
+//     const categoryName = req.params.categoryName;
 
-    findRecipesByCategory(categoryName)
-        .then(recipes => res.json(recipes))
-}
+//     findRecipesByCategory(categoryName)
+//         .then(recipes => res.json(recipes))
+// }
 
 const getOneRecipeById = (req, res) => {
     const recipeId = req.params.recipeId;
@@ -65,7 +65,7 @@ router.get('/', getAllRcipes);
 router.get('/one/:recipeId', getOneRecipeById);
 router.delete('/one/:recipeId',isAuthenticated, isAuthor,  deleteRecipe);
 router.put('/one/:recipeId', isAuthenticated, isAuthor, updateOneRecipe);
-router.get('/:categoryName', getRecipesByCategory);
+// router.get('/:categoryName', getRecipesByCategory);
 router.get('/user/:userId', isAuthenticated, getRecipesOfUser);
 
 module.exports = router;
