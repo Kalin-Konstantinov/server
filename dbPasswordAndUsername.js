@@ -1,1 +1,0 @@
-exports.user = { username: 'kalinkonstantinov', password: 'ab.1234567' }
